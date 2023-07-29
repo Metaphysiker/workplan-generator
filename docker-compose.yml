@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  ember-app:
+    build:
+      context: ./ember-app
+      dockerfile: Dockerfile
+      target: build-stage
+    image: metaphysiker/workplan-generator-ember-app:development
+    volumes:
+    - ./ember-app/app:/app/app
+    ports:
+    - "4200:4200"
+  node:
+    build: ./node
+    image: metaphysiker/workplan-generator-node:development
+    volumes:
+      - ./:/app
+    profiles:
+      - development
+    user: "${UID}:${GID}"
